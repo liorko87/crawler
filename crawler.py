@@ -11,6 +11,7 @@ import urllib
 
 import re
 import requests
+from lxml import html
 from urllib.parse import urlparse
 
 
@@ -54,6 +55,7 @@ class Crawler():
                 continue
             self.visited.add(link)
             info = self.extract_info(link)
+            print(info)
             self.crawl()
     
     def start(self):
