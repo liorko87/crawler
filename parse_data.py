@@ -1,6 +1,6 @@
 import requests
 import lxml.html
-import arrow
+import datetime
 
 
 class DataParser:
@@ -21,10 +21,15 @@ class DataParser:
             if 'Guest'.lower() in user_name or 'Unknown'.lower() in user_name or 'Anonymous'.lower() in user_name\
                     or len(user_name) == 0:
                 user_name = 'unknown'
-            if len(title) == 0:
+            if 'Unknown'.lower() in title or len(title) == 0:
                 title = 'unknown'
-            date = main_data.xpath('//div[@class="paste_box_line2"]/span')[0].attrib['title']
-            date = arrow.get(date, 'dayweek daymonth month yy HH:MM:SS AM CDT')
+            date = main_data.xpath('//div[@class="paste_box_line2"]/span')[0].attrib['title'].split(' ')
+            date[1] = date[1][:-2]
+            if len(date[1]) == 1:
+                date[1] = f'0{date[1]}'
+            del date[2]
+            date = ' '.join(date)
+            datetime_object = datetime.datetime.strptime(date, '%A %d %B %Y %I:%M:%S %p CDT')
             print(title, date, user_name)
 
             # parse the content
@@ -36,12 +41,14 @@ class DataParser:
             print(total_content)
 
         except IndexError as e:
-            with open('errorLog.log', 'w+') as error_log:
+            with open('errorLog.log', 'a+') as error_log:
                 error_log.write(f'error parsing {url}: {e.message}\n')
+
 
 def main():
     p = DataParser('https://pastebin.com/SqqZXnBg')
     p.parse()
+
 
 if __name__ == "__main__":
     main()

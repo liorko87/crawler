@@ -10,6 +10,7 @@ import urllib
 """
 
 import re
+import time
 import requests
 from urllib.parse import urlparse
 from parse_data import DataParser
@@ -60,6 +61,8 @@ class Crawler:
                 self.crawl()
         except KeyboardInterrupt:
             print('Crawler cancelled by the user')
+        except requests.exceptions.ConnectionError:
+            time.sleep(10)
     
     def start(self):
         self.crawl()
@@ -72,5 +75,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# TODO: poll every two minutes the crawler
+# TODO: Insert to database
 
 #https://dev.to/fprime/how-to-create-a-web-crawler-from-scratch-in-python-2p46
