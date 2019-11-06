@@ -13,6 +13,7 @@ import re
 import requests
 from lxml import html
 from urllib.parse import urlparse
+from parse_data import DataParser
 
 
 class Crawler():
@@ -20,6 +21,7 @@ class Crawler():
     def __init__(self):
         self.visited = set()
         self.start_url = 'https://pastebin.com/archives'
+        self.data_parser = DataParser()
 
     
     def get_html(self, url):
@@ -43,20 +45,22 @@ class Crawler():
 
         return set(filter(lambda x: 'mailto' not in x, links))
 
-    def extract_info(self, link):
+    """ def extract_info(self, link):
         html = self.get_html(link)
         meta = re.findall("<meta .*?name=[\"'](.*?)['\"].*?content=[\"'](.*?)['\"].*?>", html)    
-        return dict(meta)
+        return dict(meta) """
 
     def crawl(self):
-        links = self.get_links()
-        for link in links:
-            if link in self.visited:
-                continue
-            self.visited.add(link)
-            info = self.extract_info(link)
-            print(info)
-            self.crawl()
+        try:
+            links = self.get_links()
+            for link in links:
+                if link in self.visited:
+                    continue
+                self.visited.add(link)
+                self.data_parser.parse(link)
+                self.crawl()
+        except KeyboardInterrupt:
+            print('Crawler cancelled by the user')
     
     def start(self):
         self.crawl()
