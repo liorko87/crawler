@@ -11,20 +11,19 @@ import urllib
 
 import re
 import requests
-from lxml import html
 from urllib.parse import urlparse
 from parse_data import DataParser
 
 
-class Crawler():
+class Crawler:
 
     def __init__(self):
         self.visited = set()
         self.start_url = 'https://pastebin.com/archives'
         self.data_parser = DataParser()
 
-    
-    def get_html(self, url):
+    @staticmethod
+    def get_html(url):
         try:    
             html = requests.get(url)    
         except Exception as e:    
@@ -64,7 +63,6 @@ class Crawler():
     
     def start(self):
         self.crawl()
-
 
 
 def main():
