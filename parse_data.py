@@ -2,11 +2,13 @@ import requests
 import lxml.html
 import datetime
 
+from db_service import DbService
+
 
 class DataParser:
     def __init__(self):
-        pass
-    
+        self.db = DbService()
+
     def parse(self, url):
         try:
             html = requests.get(url)
@@ -30,7 +32,7 @@ class DataParser:
             del date[2]
             date = ' '.join(date)
             datetime_object = datetime.datetime.strptime(date, '%A %d %B %Y %I:%M:%S %p CDT')
-            print(title, date, user_name)
+            print(title, datetime_object, user_name)
 
             # parse the content
             content_div = main_data.xpath('//div[@id="selectable"]/ol')[0]
@@ -39,19 +41,22 @@ class DataParser:
                 total_content.append(content.text_content())
 
             print(total_content)
+            total_content = ' '.join(total_content).strip()
+
+            # create dictionary with all the relevant data
+            data = {
+                'url': url,
+                'username': user_name,
+                'title': title,
+                'creation_date': datetime_object,
+                'content': total_content
+            }
+
+            self.db.insert_data(data)
 
         except IndexError as e:
             with open('errorLog.log', 'a+') as error_log:
-                error_log.write(f'error parsing {url}: {e.message}\n')
-
-
-def main():
-    p = DataParser('https://pastebin.com/SqqZXnBg')
-    p.parse()
-
-
-if __name__ == "__main__":
-    main()
+                error_log.write(f'error parsing {url}: {str(e)}\n')
 
 
 # https://pythontips.com/2018/06/20/an-intro-to-web-scraping-with-lxml-and-python/

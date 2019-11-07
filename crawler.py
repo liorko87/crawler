@@ -45,11 +45,6 @@ class Crawler:
 
         return set(filter(lambda x: 'mailto' not in x, links))
 
-    """ def extract_info(self, link):
-        html = self.get_html(link)
-        meta = re.findall("<meta .*?name=[\"'](.*?)['\"].*?content=[\"'](.*?)['\"].*?>", html)    
-        return dict(meta) """
-
     def crawl(self):
         try:
             links = self.get_links()
