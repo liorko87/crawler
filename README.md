@@ -15,7 +15,7 @@ The code tested on:
 2. `Ubuntu 18.04.2 LTS`
 
 To install the required packages run: `pip3 install -r requirements.txt --user`.  
-Sqlite3 should be installed on the machine
+Sqlite3 should be installed on the machine.
 
 ### Execution
 
