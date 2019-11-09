@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
 
-"""
-import requests
-from lxml import etree
-from io import StringIO
-import tinydb
-import arrow
-import urllib
-"""
-
 import re
 import time
 import requests
@@ -18,9 +9,9 @@ from parse_data import DataParser
 
 class Crawler:
 
-    def __init__(self):
+    def __init__(self, url):
         self.visited = set()
-        self.start_url = 'https://pastebin.com/'
+        self.start_url = url
         self.data_parser = DataParser()
 
     @staticmethod
@@ -61,9 +52,3 @@ class Crawler:
     
     def start(self):
         self.crawl()
-
-
-# TODO: poll every two minutes the crawler
-# TODO: Insert to database
-
-#https://dev.to/fprime/how-to-create-a-web-crawler-from-scratch-in-python-2p46

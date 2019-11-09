@@ -33,8 +33,8 @@ class DbService:
                                      VALUES (?, ?, ?, ?, ?)
                                      '''
 
-        count = self.cursor.execute(sqlite_insert_query, (data['url'], data['username'], data['title'],
-                                                          data['creation_date'], data['content']))
+        count = self.cursor.execute(sqlite_insert_query, (data.url, data.username, data.title,
+                                                          data.creation_date, data.content))
         self.conn.commit()
 
 

@@ -5,7 +5,7 @@ from crawler import Crawler
 def main():
     while True:
         try:
-            crawler = Crawler()
+            crawler = Crawler('https://pastebin.com/')
             crawler.start()
             time.sleep(120)
         except KeyboardInterrupt:
