@@ -55,8 +55,9 @@ class DataParser:
             self.db.insert_data(data)
 
         except IndexError as e:
-            with open('errorLog.log', 'a+') as error_log:
-                error_log.write(f'error parsing {url}: {str(e)}\n')
+            print(f'error parsing {url}: {str(e)}\n')
+        except UnicodeDecodeError as e:
+            print(f'error parsing {url} - unicode does not match utf-8: {str(e)}\n')
 
 
 # https://pythontips.com/2018/06/20/an-intro-to-web-scraping-with-lxml-and-python/

@@ -20,7 +20,7 @@ class Crawler:
 
     def __init__(self):
         self.visited = set()
-        self.start_url = 'https://pastebin.com/archives'
+        self.start_url = 'https://pastebin.com/'
         self.data_parser = DataParser()
 
     @staticmethod
@@ -62,14 +62,6 @@ class Crawler:
     def start(self):
         self.crawl()
 
-
-def main():
-    crawler = Crawler()
-    crawler.start()
-
-
-if __name__ == "__main__":
-    main()
 
 # TODO: poll every two minutes the crawler
 # TODO: Insert to database

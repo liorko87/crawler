@@ -4,7 +4,7 @@ import sqlite3
 class DbService:
     def __init__(self):
         try:
-            self.conn = sqlite3.connect('pastebin.db')
+            self.conn = sqlite3.connect('pastebin.db', check_same_thread=False)
             self.cursor = self.conn.cursor()
             sqlite_create_table_query = '''CREATE TABLE IF NOT EXISTS pastebinData (
                                 url text PRIMARY KEY,
@@ -16,7 +16,6 @@ class DbService:
             self.cursor.execute(sqlite_create_table_query)
             self.conn.commit()
             print("SQLite table created")
-
 
         except sqlite3.Error as error:
             print("Error while creating a sqlite table", error)
