@@ -10,10 +10,11 @@ The project uses SQLLiteDB. Their are generalization of the data as requested in
 ### Installation
 
 The code tested on:
+
 1. `Windows 10 64 bit`
 2. `Ubuntu 18.04.2 LTS`
 
-To install the required packages run: `pip3 install -r requirements.txt --user`
+To install the required packages run: `pip3 install -r requirements.txt --user`.  
 Sqlite3 should be installed on the machine
 
 ### Execution
