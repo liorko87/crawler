@@ -27,15 +27,16 @@ class DbService:
         self.conn.close()
 
     def insert_data(self, data):
-        sqlite_insert_query = f'''
-                                     Insert INTO `pastebinData`
-                                     (url, username, title, creation_date, content)
-                                     VALUES (?, ?, ?, ?, ?)
-                                     '''
+        try:
+            sqlite_insert_query = f'''
+                                         Insert INTO `pastebinData`
+                                         (url, username, title, creation_date, content)
+                                         VALUES (?, ?, ?, ?, ?)
+                                         '''
+            self.cursor.execute(sqlite_insert_query, (data.url, data.username, data.title,
+                                                              data.creation_date, data.content))
+            self.conn.commit()
 
-        count = self.cursor.execute(sqlite_insert_query, (data.url, data.username, data.title,
-                                                          data.creation_date, data.content))
-        self.conn.commit()
-
-
+        except sqlite3.Error as error:
+            print("Error while inserting data", error)
 
