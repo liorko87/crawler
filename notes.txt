@@ -1,0 +1,10 @@
+Main issues:
+- no project structure (explicitly mentioned in the assignment instructions)
+- clean code: redundant comments in the code which could have been replaced by more readable code (naming and structure) [DataParser in parse_data.py]
+- Many linting (flake8) issues (also explicitly mentioned in the assignment instructions)
+- The structure of the parsed webpage is baked into the code (user_div variable in the DataParser object) which is a bad practice as a design change will require a refactor and not just a configuration change.
+- Separation of concerns: DataParser object is fetching the data, parsing it and inserting it to the DB (all in the same method). should have been done in the main logic object, and properly structured to separate methods and be part of the main flow.
+- Crawler object is using regex to parse links which is a bad practice, see (https://stackoverflow.com/questions/1732348/regex-match-open-tags-except-xhtml-self-contained-tags/1732454#1732454)
+- get_links method: filtering unwanted links on the return statement should have been avoided, could have been done in the for loop above which is already iterating all the links and filtering with urlparse.
+- crawler object holds all the visited links in a set, what happens when you have millions of visited URLs?
+ - crawler: why create a start method which only calls crawl method?
